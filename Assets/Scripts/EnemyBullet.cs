@@ -6,7 +6,7 @@ public class EnemyBullet : MonoBehaviour
 {
     void Update()
     {
-        transform.Translate(2 * Time.deltaTime * Vector2.down);
+        this.transform.Translate(2 * Time.deltaTime * Vector2.down);
     }
     private void LateUpdate()
     {

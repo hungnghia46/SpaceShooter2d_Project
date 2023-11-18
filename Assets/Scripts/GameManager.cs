@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,22 +6,23 @@ public class GameManager : MonoBehaviour
     public GameObject Uioption;
     public Slider BGMSlider;
     public Slider SFXSlider;
-    public AudioSource EffectSetting; 
+    public AudioSource EffectSetting;
     public AudioSource BGMSetting;
-    [System.Obsolete]
-    private void Start() {
+    [SerializeField] private GameObject EnemySpawnManager;
+    [SerializeField] private GameObject GarbagePool;
+    private void Start()
+    {
         SFXSlider.value = .05f;
         BGMSlider.value = .5f;
     }
-
-    [System.Obsolete]
-    private void Update() {
+    private void Update()
+    {
         EffectSetting.volume = SFXSlider.value;
         BGMSetting.volume = BGMSlider.value;
         //
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (Uioption.active == true)
+            if (Uioption.activeSelf == true)
             {
                 Uioption.SetActive(false);
             }
@@ -32,12 +31,18 @@ public class GameManager : MonoBehaviour
                 Uioption.SetActive(true);
             }
         }
-        if(Uioption.active == true)
+        if (Uioption.activeSelf == true)
         {
-            Time.timeScale = 0;
-        }else
+            EnemySpawnManager.SetActive(false);
+            GarbagePool.SetActive(false);
+
+            EffectSetting.volume = 0;
+            BGMSetting.volume = 0;
+        }
+        else
         {
-             Time.timeScale = 1;
+            EnemySpawnManager.SetActive(true);
+            GarbagePool.SetActive(true);
         }
     }
 }

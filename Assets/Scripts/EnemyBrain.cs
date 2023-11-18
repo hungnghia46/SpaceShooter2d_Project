@@ -6,18 +6,18 @@ public class EnemyBrain : MonoBehaviour
 {
     private Transform Player;
     [SerializeField] private float speed;
-    [SerializeField] Transform bulletPool;
+    private Transform garbagePool;
     [SerializeField] GameObject EnemyBullet;
     private void Awake()
     {
-        bulletPool = GameObject.Find("Bullet Pool").transform;
-        Player = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        garbagePool = GameObject.FindGameObjectWithTag("Garbage Pool").GetComponent<Transform>();
+        Player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
     private void Start() {
         InvokeRepeating(nameof(Shoot), Random.Range(0f,1f),Random.Range(1f,2f));
     }
     void Shoot()
     {
-        Instantiate(EnemyBullet,this.transform.position,Quaternion.identity,bulletPool);
+        Instantiate(EnemyBullet,this.transform.position,Quaternion.identity, garbagePool);
     }
 }
