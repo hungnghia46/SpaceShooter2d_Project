@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 
-public class ScoreManager : MonoBehaviour
+public class ScoreManager : Singleton<ScoreManager>
 {
     [SerializeField] int scoreCount = 0;
     bool isScoreCount = false;
@@ -29,4 +29,9 @@ public class ScoreManager : MonoBehaviour
     {
         EventManager.Instance.ScoreEvent -= UpdateScore;
     }
+    public int getScore()
+    {
+        return scoreCount;
+    }
+
 }

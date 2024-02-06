@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShipController : MonoBehaviour
+public class ShipController : Singleton<ShipController>
 {
+    [SerializeField] GameObject GameOverPanel;
     [SerializeField] ParticleSystem _particleSystem;
     [SerializeField] private float speed;
     [SerializeField] private BoxCollider2D _boxCollider2D;
@@ -22,9 +23,9 @@ public class ShipController : MonoBehaviour
         Vector2 mouseDir = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 dir = mouseDir - (Vector2)this.transform.position;
         float distanceToMouse = dir.magnitude;
-        if(distanceToMouse < .3)
+        if (distanceToMouse < .3)
         {
-           return;
+            return;
         }
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle - 90);
@@ -32,16 +33,16 @@ public class ShipController : MonoBehaviour
         //Move player to oposite side when player reach the boder
         playerBoderCheck();
 
-        if(_isDead)
+        if (_isDead)
         {
-            Time.timeScale = 0;
+            Destroy(this.gameObject);
             loadHighScorePanel();
         }
     }
 
     private void loadHighScorePanel()
     {
-        
+        GameOverPanel.SetActive(true);
     }
 
     void playerBoderCheck()
@@ -68,7 +69,7 @@ public class ShipController : MonoBehaviour
             _isDead = true;
             _particleSystem.Play();
             _boxCollider2D.enabled = false;
-            _spriteRenderer.enabled = false;  
+            _spriteRenderer.enabled = false;
         }
     }
 }
